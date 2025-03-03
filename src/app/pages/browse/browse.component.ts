@@ -5,7 +5,7 @@ import { HeaderComponent } from "../../core/components/header/header.component";
 import { BannerComponent } from 'src/app/core/components/banner/banner.component';
 import { MoviesService } from 'src/app/shared/services/movies.service';
 import { MoviesCarouselComponent } from 'src/app/shared/components/movies-carousel/movies-carousel.component';
-import { IVedioContent } from 'src/app/shared/models/vedio-content.interface';
+import { IVideoContent } from 'src/app/shared/models/vedio-content.interface';
 import { forkJoin, map } from 'rxjs';
 
 @Component({
@@ -27,13 +27,13 @@ export class BrowseComponent implements OnInit {
   public email = this.loggedInUser?.email || '';
 
   // ✅ Fixed: Renamed `nowPlayongMovies` to `nowPlayingMovies`
-  movies: IVedioContent[] = [];
-  tvShows: IVedioContent[] = [];
-  ratedMovies: IVedioContent[] = [];
-  nowPlayingMovies: IVedioContent[] = [];
-  popularMovies: IVedioContent[] = [];
-  topRatedMovies: IVedioContent[] = [];
-  upcomingMovies: IVedioContent[] = [];
+  movies: IVideoContent[] = [];
+  tvShows: IVideoContent[] = [];
+  ratedMovies: IVideoContent[] = [];
+  nowPlayingMovies: IVideoContent[] = [];
+  popularMovies: IVideoContent[] = [];
+  topRatedMovies: IVideoContent[] = [];
+  upcomingMovies: IVideoContent[] = [];
 
   private sources = [
     this.moviesService.getMovies(),
@@ -53,13 +53,13 @@ export class BrowseComponent implements OnInit {
         })
       )
       .subscribe((res: any) => {
-        this.movies = res.movies.results as IVedioContent[];
-        this.tvShows = res.tvShows.results as IVedioContent[];
-        this.ratedMovies = res.ratedMovies.results as IVedioContent[];
-        this.nowPlayingMovies = res.nowPlaying.results as IVedioContent[]; // ✅ Fixed variable name
-        this.upcomingMovies = res.upcoming.results as IVedioContent[];
-        this.popularMovies = res.popular.results as IVedioContent[];
-        this.topRatedMovies = res.topRated.results as IVedioContent[];
+        this.movies = res.movies.results as IVideoContent[];
+        this.tvShows = res.tvShows.results as IVideoContent[];
+        this.ratedMovies = res.ratedMovies.results as IVideoContent[];
+        this.nowPlayingMovies = res.nowPlaying.results as IVideoContent[]; // ✅ Fixed variable name
+        this.upcomingMovies = res.upcoming.results as IVideoContent[];
+        this.popularMovies = res.popular.results as IVideoContent[];
+        this.topRatedMovies = res.topRated.results as IVideoContent[];
       });
 
     console.log("\n\nMovies:", this.movies);

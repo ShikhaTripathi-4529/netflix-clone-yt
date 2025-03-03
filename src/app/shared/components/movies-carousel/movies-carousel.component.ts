@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swiper from 'swiper';
-import { IVedioContent } from '../../models/vedio-content.interface';
+import { IVideoContent } from '../../models/vedio-content.interface';
 import { DescriptionPipe } from '../../pipe/description.pipe';
 
 @Component({
@@ -12,13 +12,13 @@ import { DescriptionPipe } from '../../pipe/description.pipe';
   styleUrls: ['./movies-carousel.component.scss']
 })
 export class MoviesCarouselComponent implements OnInit, AfterViewInit {
-  
-  @Input() vedioContents:IVedioContent[] = [];
+
+  @Input() videoContents:IVideoContent[] = [];
   @Input() title: string = '';
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
 
   ngOnInit(): void {
-    console.log("\n\n\n 20202020 vedioContents ",this.vedioContents);
+    console.log("\n\n\n 20202020 videoContents ",this.videoContents);
     console.log("\n\n\n 2121212121 ",this.title)
   }
   ngAfterViewInit(): void {

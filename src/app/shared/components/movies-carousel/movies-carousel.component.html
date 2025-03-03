@@ -1,15 +1,15 @@
-<div class="container px-20 mt-14 mb-20">
-    <p class="font-semibold text-2xl my-3 ml-3">{{title}}</p>
+<div class="container px-20 mb-20 mt-14">
+    <p class="my-3 ml-3 text-2xl font-semibold">{{title}}</p>
     <div #swiperContainer class="swiper-container">
-      <div class="swiper-wrapper"> {{vedioContents}}
-        <ng-container *ngFor="let movie of vedioContents">
-          <div class="swiper-slide relative">
+      <div class="swiper-wrapper">
+        <ng-container *ngFor="let movie of videoContents">
+          <div class="relative swiper-slide">
             <img *ngIf="movie?.poster_path" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="Movie Poster" />
-            <div class="desc p-2">
-              <span class="text-base flex flex-wrap font-bold">{{movie.original_title}}</span>
-              <p class="text-xs my-3">{{movie.overview | description:200}}</p>
+            <div class="p-2 desc">
+              <span class="flex flex-wrap text-base font-bold">{{movie.original_title}}</span>
+              <p class="my-3 text-xs">{{movie.overview | description:200}}</p>
               <div class="py-3 absolute w-[90%] bottom-1">
-                <p class="text-xs flex justify-between items-center">
+                <p class="flex items-center justify-between text-xs">
                   <span class="text-green-500">Vote Average : {{movie.vote_average}}</span>
                   <i class="fa fa-2x fa-chevron-circle-down" aria-hidden="true"></i>
                 </p>
