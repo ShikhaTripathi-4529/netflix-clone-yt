@@ -6,8 +6,27 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Google Authentication & YouTube API -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
   <app-root></app-root>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const iframe = document.querySelector("iframe");
+      if (iframe) {
+        console.log("Iframe found:", iframe);
+        try {
+          console.log(iframe.contentWindow.document); // 🚨 This will fail
+        } catch (error) {
+          console.error("Cross-Origin Access Blocked:", error.message);
+        }
+      } else {
+        console.warn("No iframe found in the document.");
+      }
+    });
+  </script>
 </body>
 </html>
