@@ -1,4 +1,4 @@
-export interface IVedioContent {
+export interface IVideoContent {
     adult: boolean
     backdrop_path: string
     genre_ids: number[]
@@ -14,4 +14,3 @@ export interface IVedioContent {
     vote_average: number
     vote_count: number
   }
-  
