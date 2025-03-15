@@ -1,34 +1,20 @@
-name: Deploy Angular App to Vercel
-
-on:
-  push:
-    branches:
-      - master  # Deploy when changes are pushed to the main branch
-  pull_request:
-    branches:
-      - master
-
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: npm
 
       - name: Install Dependencies
         run: npm install
 
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
       - name: Build Angular App
         run: ng build --configuration=production
-
-      - name: Deploy to Vercel
-        run: |
-          npm install -g vercel
-          vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
