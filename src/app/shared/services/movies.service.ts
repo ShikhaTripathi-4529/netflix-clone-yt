@@ -1,98 +1,60 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-const API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNTUzZjY3Y2JmY2UxOGI5MTcyNGJhNzI1NGMzNjMwMiIsIm5iZiI6MTc0MDU3MjAwMC4zNjYwMDAyLCJzdWIiOiI2N2JmMDU2MGY5NzU1ZmUwOWQ1NjI0YzEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.VnyL2-dpJ73T5Q8LAG8VS9imS93GXTSBYQ0TiSoCmr0'
-const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
-const headers = new HttpHeaders({
-  'Authorization': `Bearer ${API_KEY}`,
-  'Content-Type': 'application/json'
-});
-const options = {
-  method: 'GET',
-  params: {
-    include_adults: true,
-    include_videos: true,
-    language : 'en-US',
-    page:1,
-    sort_by: 'popularity.desc'
-  },
-  headers: headers
-};
-
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MoviesService {
-  private guestSessionId = 'c553f67cbfce18b91724ba7254c36302'; // Replace with a valid session ID
+export class MovieService {
+  private http = inject(HttpClient);
+  private baseUrl = environment.apiBaseUrl;
 
-  private http = inject(HttpClient); // Injecting without a constructor
-
-  getMovies():Observable<any> {
-    const data =  this.http.get<any>(url, options);
-    console.log(data)
-    return data;
+  private getParams() {
+    return new HttpParams()
+      .set('include_adult', 'false')
+      .set('include_video', 'true')
+      .set('language', 'en-US')
+      .set('page', '1')
+      .set('sort_by', 'popularity.desc');
   }
 
-  getTvShows():Observable<any> {
-    const data =  this.http.get('https://api.themoviedb.org/3/discover/tv', options);
-    console.log(data)
-    return data;
+  getMovies() {
+    return this.http.get<any>(`${this.baseUrl}/discover/movie`, { params: this.getParams(), ...environment.getHeaders() });
   }
 
-  getRatedMovies():Observable<any> {
-    const data =  this.http.get(`https://api.themoviedb.org/3/guest_session/${this.guestSessionId}/rated/movies`, options)
-    console.log(data)
-    return data;
+  getTvShows() {
+    return this.http.get(`${this.baseUrl}/discover/tv`, { params: this.getParams(), ...environment.getHeaders() });
   }
 
-  getBannerImage(id: number):Observable<any> {
-    const data =   this.http.get(`https://api.themoviedb.org/3/movie/${id}/images`, options);
-    console.log(data)
-    return data;
-
+  getRatedMovies(guestSessionId: string) {
+    return this.http.get(`${this.baseUrl}/guest_session/${guestSessionId}/rated/movies`, environment.getHeaders());
   }
 
-  getBannerVideo(id: number):Observable<any> {
-    const data =   this.http.get(`https://api.themoviedb.org/3/movie/${id}/videos`, options);
-    console.log(data)
-    return data;
-
+  getBannerImage(id: number) {
+    return this.http.get(`${this.baseUrl}/movie/${id}/images`, environment.getHeaders());
   }
 
-  getBannerDetail(id: number):Observable<any>{
-    const data =   this.http.get(`https://api.themoviedb.org/3/movie/${id}`, options);
-    console.log(data)
-    return data;
-
+  getBannerVideo(id: number) {
+    return this.http.get(`${this.baseUrl}/movie/${id}/videos`, environment.getHeaders());
   }
 
-  getNowPlayingMovies():Observable<any> {
-    const data =   this.http.get('https://api.themoviedb.org/3/movie/now_playing', options);
-    console.log(data)
-    return data;
-
+  getBannerDetail(id: number) {
+    return this.http.get(`${this.baseUrl}/movie/${id}`, environment.getHeaders());
   }
 
-  getPopularMovies():Observable<any> {
-    const data =   this.http.get('https://api.themoviedb.org/3/movie/popular', options);
-    console.log(data);
-    return data;
-
+  getNowPlayingMovies() {
+    return this.http.get(`${this.baseUrl}/movie/now_playing`, environment.getHeaders());
   }
 
-  getTopRated():Observable<any> {
-    const data =   this.http.get('https://api.themoviedb.org/3/movie/top_rated', options)
-    console.log(data)
-    return data;
-
+  getPopularMovies() {
+    return this.http.get(`${this.baseUrl}/movie/popular`, environment.getHeaders());
   }
 
-  getUpcomingMovies():Observable<any> {
-    const data =   this.http.get('https://api.themoviedb.org/3/movie/upcoming', options);
-    console.log(data);
-    return data;
+  getTopRated() {
+    return this.http.get(`${this.baseUrl}/movie/top_rated`, environment.getHeaders());
+  }
 
+  getUpcomingMovies() {
+    return this.http.get(`${this.baseUrl}/movie/upcoming`, environment.getHeaders());
   }
 }
